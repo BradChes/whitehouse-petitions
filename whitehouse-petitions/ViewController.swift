@@ -68,12 +68,14 @@ class ViewController: UITableViewController {
             filteredPetitions.removeAll()
             
             for petition in allPetitions {
-                if petition.title.contains(term) || petition.body.contains(term) {
+                if petition.title.range(of: term, options: .caseInsensitive) != nil || petition.body.range(of: term, options: .caseInsensitive) != nil {
                     filteredPetitions.append(petition)
                 }
             }
-            tableView.reloadData()
+        } else {
+            filteredPetitions = allPetitions
         }
+        tableView.reloadData()
     }
     
     private func parse(json: Data) {
