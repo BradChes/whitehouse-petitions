@@ -23,6 +23,8 @@ class ViewController: UITableViewController {
             urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
         }
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(showCredits))
+        
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
@@ -35,6 +37,12 @@ class ViewController: UITableViewController {
     
     private func showError() {
         let ac = UIAlertController(title: "Loading Error", message: "There was a problem loading the feed; Please check your connection and try again", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Okay", style: .default))
+        present(ac, animated: true)
+    }
+    
+    @objc private func showCredits() {
+        let ac = UIAlertController(title: "Credits", message: "This data has come from the 'We The People' API of the Whitehouse", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Okay", style: .default))
         present(ac, animated: true)
     }
