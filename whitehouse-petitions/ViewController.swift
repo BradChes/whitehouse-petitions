@@ -35,14 +35,16 @@ class ViewController: UITableViewController {
                     return
                 }
             }
+            self?.showError()
         }
-        showError()
     }
     
     private func showError() {
-        let ac = UIAlertController(title: "Loading Error", message: "There was a problem loading the feed; Please check your connection and try again", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Okay", style: .default))
-        present(ac, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let ac = UIAlertController(title: "Loading Error", message: "There was a problem loading the feed; Please check your connection and try again", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Okay", style: .default))
+            self?.present(ac, animated: true)
+        }
     }
     
     @objc private func showCredits() {
@@ -82,10 +84,13 @@ class ViewController: UITableViewController {
     private func parse(json: Data) {
         let decoder = JSONDecoder()
 
+        
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             allPetitions = jsonPetitions.results
             filteredPetitions = allPetitions
-            tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
         }
     }
     
