@@ -11,7 +11,9 @@ An application that parses the "We the people" Whitehouse petitions JSON feed. T
 - Codable
 - UITabBarController
 - UIStoryboard
-
+- GCD
+- performSelector()
+- Quality of Service
 
 ## Demonstration
 Small demonstration as to what the application does when on device.
